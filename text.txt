@@ -1,1 +1,106 @@
-mongodb+srv://ronaessi_28:2021511307@#Vc@tunetalkcluster.hhoqz8g.mongodb.net/?appName=TuneTalkCluster
+After creating the connection string, do these exact steps.
+
+But first: don’t use that exact string, because your password contains @ and # and it will fail.
+
+Use this corrected string instead:
+
+mongodb+srv://ronaessi_28:2021511307%40%23Vc@tunetalkcluster.hhoqz8g.mongodb.net/tunetalk?retryWrites=true&w=majority
+
+(@ → %40, # → %23, and added /tunetalk)
+
+
+---
+
+Step 1: Open .env
+
+Inside your backend folder, open:
+
+.env
+
+Paste:
+
+PORT=5000
+MONGO_URI=mongodb+srv://ronaessi_28:2021511307%40%23Vc@tunetalkcluster.hhoqz8g.mongodb.net/tunetalk?retryWrites=true&w=majority
+
+Save:
+
+Ctrl + S
+
+
+---
+
+Step 2: Create config/db.js
+
+Inside backend/config/, create db.js and paste:
+
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected Successfully");
+  } catch (error) {
+    console.log("DB Error:", error.message);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+
+Save.
+
+
+---
+
+Step 3: Update server.js
+
+Replace with:
+
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+
+dotenv.config();
+
+connectDB();
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("TuneTalk Backend Running");
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+Save.
+
+
+---
+
+Step 4: Run backend
+
+In terminal (inside backend):
+
+Stop old server if running:
+
+Ctrl + C
+
+Run:
+
+npm start
+
+
+---
+
+Expected output
+
+MongoDB Connected Successfully
+Server running on port 5000
+
+If you see that → Day 2 DB connection is done ✅
+
+Send a screenshot of the terminal output after npm start.
