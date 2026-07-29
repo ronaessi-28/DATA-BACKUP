@@ -4,7 +4,7 @@ Just to update you this is Non-technical role. If you are Ok to take this role, 
 
 Below is the JD for your reference. It might change as per the requirement.
 
-Key Responsibilities
+Key Responsibilities  
 1. Operational Management
 •	Monitor daily operations and ensure smooth execution of processes
 •	Track and manage operational KPIs (utilization, productivity, SLAs)
